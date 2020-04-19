@@ -24,28 +24,34 @@ export default {
   },
   data() {
     return {
-      //TODO set this to be empty initially
-      gameBoard: {}//{'board': 'initstate'} // Contents of game throughout play
+      gameBoard: {'board': 'initstate'} // Contents of game throughout play
     }
   },
   methods: {
+    /* This method is called to start a new game.  The POST request contains a
+     board with the player's first move. This board object will be updated 
+     throughout the rest of the game.
+    */
     newGame: function () {
       var board = {'board': 'newgame__'};  //TODO: This will be empty board with first player move
       // This adds a new game with the contents of board
       axios.post("http://127.0.0.1:8000/api/", board) 
         .then( response => {
-          this.gameBoard = response.data  // Update gameboard prop with state of game
+          this.gameBoard = response.data  // POST response contains the new game object
         })
         .catch(e => {
           this.errors.push(e)
         });
     },
+    /* This method will update the current game object when the player makes a 
+      new move.  The PUT request response will contain the computer's move.
+    */
     updateGame: function () {
-      var board = this.gameBoard;
-      // This adds a new game with the contents of board
-      axios.put(`http://127.0.0.1:8000/api/game/${this.gameBoard.id}`, board) 
+      var board = {'board': 'updated__'};
+      // This updates the current game with the new player move
+      axios.put(`http://127.0.0.1:8000/api/${this.gameBoard.id}/`, board) 
         .then( response => {
-          this.gameBoard = response.data  // Update gameboard prop with state of game
+          this.gameBoard = response.data  // PUT response contains updated game object
         })
         .catch(e => {
           this.errors.push(e)
@@ -53,7 +59,6 @@ export default {
     }
   }
 }
-
 
 </script>
 
