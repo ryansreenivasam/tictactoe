@@ -31,8 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'rest_framework', #djangorestframework dependency
-    'gameapi.apps.GameapiConfig', # register gameapi with djangoapp
+    'corsheaders', # django-cors-headers dependency
+    'rest_framework', # djangorestframework dependency
+    'gameapi.apps.GameapiConfig', # this registers gameapi with djangoapp
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # middleware to listen for response
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -120,3 +122,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# This will allow all origins to make cross site HTTP requests
+CORS_ORIGIN_ALLOW_ALL = True
