@@ -31,7 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'gameapi.apps.GameapiConfig',
+    'rest_framework', #djangorestframework dependency
+    'gameapi.apps.GameapiConfig', # register gameapi with djangoapp
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
