@@ -27,16 +27,36 @@
       <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
     </ul>
+    <button v-on:click="newGame"> NewGame </button>
+    <h3>currentgame: {{ gameBoard }}</h3>
   </div>
 </template>
 
 <script>
+import axios from "axios"; //Axios is a tool to handle HTTP requests
+
 export default {
   name: 'HelloWorld',
   props: {
-    msg: String
+    msg: String,
+    gameBoard: String
+  },
+  methods: {
+    newGame: function () {
+      var board = {'board': 'OOOOOOOOO'};
+      // This adds a new game with the contents of board
+      axios.post("http://127.0.0.1:8000/api/", board) 
+        .then( response => {
+          this.gameBoard = response.data
+        })
+        .catch(e => {
+          this.errors.push(e)
+        });
+    }
   }
 }
+
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
