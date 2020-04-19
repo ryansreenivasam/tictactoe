@@ -9,10 +9,15 @@ class Game(models.Model):
 
     # This specifies what to print when this model is printed
     def __str__(self):
-        self.AIMove()
         return self.board # Prints contents of board field
 
+    # This method will hold the logic for the AI opponent
     def AIMove(self):
         listConv = list(self.board)
-        listConv[3] = "O" 
+        listConv[3] = "O" # placeholder to show that we went through this
         self.board = "".join(listConv)
+
+    # This method overrides the standard save method in order to call the AI logic
+    def save(self, *args, **kwargs):
+        self.AIMove()
+        return super(Game, self).save(*args, **kwargs)
