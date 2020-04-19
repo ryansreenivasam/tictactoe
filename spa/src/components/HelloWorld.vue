@@ -1,11 +1,13 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>  
+
+    <!-- This displays the current contents of the board as it is updated -->
+    <h3>currentgame: {{ gameBoard }}</h3>
     
     <!-- This is a button that sends a POST request with an empty game board -->
     <button v-on:click="newGame"> NewGame </button>
-    <!-- This displays the current contents of the board as it is updated -->
-    <h3>currentgame: {{ gameBoard }}</h3>
+  
   </div>
 </template>
 
@@ -16,7 +18,11 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String, // from default Vue app
-    gameBoard: String // Contents of game throughout play
+  },
+  data() {
+    return {
+      gameBoard: "         " // Contents of game throughout play
+    }
   },
   methods: {
     newGame: function () {
