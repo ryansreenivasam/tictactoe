@@ -24,17 +24,16 @@ export default {
   },
   data() {
     return {
-      gameBoard: {'board': 'initstate'} // Contents of game throughout play
+      gameBoard: {'board': '_________'} // Contents of game throughout play
     }
   },
   methods: {
-    /* This method is called to start a new game.  The POST request contains a
-     board with the player's first move. This board object will be updated 
-     throughout the rest of the game.
+    /* This method is called by the system to start a new game after a game 
+    is completed.  The POST request contains an empty board.
     */
     newGame: function () {
-      var board = {'board': 'newgame__'};  //TODO: This will be empty board with first player move
-      // This adds a new game with the contents of board
+      var board = {'board': '_________'}; // Creating an empty board
+      // This adds a new game with the empty board
       axios.post("http://127.0.0.1:8000/api/", board) 
         .then( response => {
           this.gameBoard = response.data  // POST response contains the new game object
