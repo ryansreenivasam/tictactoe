@@ -48,7 +48,7 @@ export default {
     The PUT request response will contain the new AI move.
     */
     updateGame: function () {
-      var board = {'board': 'X________',  'response': true};
+      var board = {'board': '____X____',  'response': true};
       // This updates the current game with the new player move
       axios.put(`http://127.0.0.1:8000/api/${this.gameBoard.id}/`, board) 
         .then( response => {
