@@ -29,11 +29,12 @@ export default {
   },
   methods: {
     /* This method is called by the system to start a new game after a game 
-    is completed.  The POST request contains an empty board.
+    is completed.  The POST request contains an empty board and sets the 
+    active field to true.
     */
     newGame: function () {
-      var board = {'board': '_________'}; // Creating an empty board
-      // This adds a new game with the empty board
+      var board = {'board': '_________', 'active': true};
+      // This adds a new game with an empty board and active set to true
       axios.post("http://127.0.0.1:8000/api/", board) 
         .then( response => {
           this.gameBoard = response.data  // POST response contains the new game object
@@ -42,6 +43,7 @@ export default {
           this.errors.push(e)
         });
     },
+
     /* This method will update the current game object when the player makes a 
       new move.  The PUT request response will contain the computer's move.
     */

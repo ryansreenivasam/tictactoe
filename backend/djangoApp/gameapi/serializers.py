@@ -9,4 +9,4 @@ from .models import Game
 class GameSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Game
-        fields = ('id', 'board',)
+        fields = ('id', 'board', 'active')
