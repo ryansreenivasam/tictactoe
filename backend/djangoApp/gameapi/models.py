@@ -58,10 +58,10 @@ class Game(models.Model):
             # Check if index is empty if it contains "_".
             if currBoard[i] == "_":
                 # Make a copy of the board to run tests on.
-                nextMoveBoard = currBoard
+                nextMoveBoard = currBoard.copy()
                 # Set index we are testing to letter of the current player. A or U
                 nextMoveBoard[i] = player
-                print(nextMoveBoard)
+                print(nextMoveBoard, " nextMoveBoard")
                 # Make a recursive call to minimax() to find all possible 
                 # outcomes of the move we are testing.  Find the opponent 
                 # of the current player and pass them into the recursive call.
@@ -69,7 +69,6 @@ class Game(models.Model):
                 # each level of recursion. Minimax will return the best score
                 # possible from all potential outcomes of this move.
                 scoreForMove = -self.minimax(nextMoveBoard, self.getOpponent(player))
-                print("recursion exited")
                 # If the score returned from the recursive call is better than 
                 # the current score, update the score. 
                 if scoreForMove > score:
@@ -83,7 +82,7 @@ class Game(models.Model):
         if move == -1:
             # We return zero here so the score is neither increased nor 
             # decreased for this scenario.
-            print("draw")
+            print("this game will be a draw")
             return 0
 
         # Each recursive call will return score.
