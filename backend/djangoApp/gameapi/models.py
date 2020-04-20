@@ -18,12 +18,28 @@ class Game(models.Model):
 
     # This method will hold the logic for the AI opponent
     def AIMove(self):
-        listConv = list(self.board)
-        listConv[3] = "O" # placeholder to show that we went through this
-        self.board = "".join(listConv)
+        boardList = list(self.board) # split board string into list
 
-    # This method overrides the standard save method in order to call the AI logic
+        boardList[3] = "O" # placeholder to show that we went through this
+
+        self.board = "".join(boardList) # join boardList back into string
+
+    # This method overrides the standard save method to check for a winner 
+    # and call for an AI move if necessary.
     def save(self, *args, **kwargs):
-        if self.active:
-            self.AIMove()
+        if self.active: # Check if game is currently in use
+            if not self.winner(): # Check if the user won with their last move
+                self.AIMove() # If user did not win, get a new AI move
+                
         return super(Game, self).save(*args, **kwargs)
+
+
+    # This method checks if the user or AI has won the game.  The method will
+    # return True if there is a winner and false if there is not.
+    def winner(self):
+        # TODO Add logic to identify if someone has won
+        winner = False 
+
+        # TODO set winner to true and active to false if someone has won
+       
+        return winner
