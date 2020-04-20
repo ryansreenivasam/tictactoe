@@ -21,13 +21,14 @@ class Game(models.Model):
     def AIMove(self):
         # Split board string into list for further manipulation.
         boardList = list(self.board) 
-
+        print(boardList)
          # Pass current board and A for AI player to find the next AI move.
         score = self.minimax(boardList, "A")
         print(score)
 
         # Join indices of boardList into string and assign to board field.
         self.board = "".join(boardList)
+        print(self.board)
 
         #TODO check if this AI move has won the game
 
@@ -60,6 +61,7 @@ class Game(models.Model):
                 nextMoveBoard = currBoard
                 # Set index we are testing to letter of the current player. A or U
                 nextMoveBoard[i] = player
+                print(nextMoveBoard)
                 # Make a recursive call to minimax() to find all possible 
                 # outcomes of the move we are testing.  Find the opponent 
                 # of the current player and pass them into the recursive call.
@@ -67,6 +69,7 @@ class Game(models.Model):
                 # each level of recursion. Minimax will return the best score
                 # possible from all potential outcomes of this move.
                 scoreForMove = -self.minimax(nextMoveBoard, self.getOpponent(player))
+                print("recursion exited")
                 # If the score returned from the recursive call is better than 
                 # the current score, update the score. 
                 if scoreForMove > score:
@@ -80,6 +83,7 @@ class Game(models.Model):
         if move == -1:
             # We return zero here so the score is neither increased nor 
             # decreased for this scenario.
+            print("draw")
             return 0
 
         # Each recursive call will return score.
