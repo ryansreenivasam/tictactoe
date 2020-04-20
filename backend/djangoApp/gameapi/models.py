@@ -22,8 +22,8 @@ class Game(models.Model):
         # Split board string into list for further manipulation.
         boardList = list(self.board) 
         print(boardList)
-         # Pass current board and A for AI player to find the next AI move.
-        score = self.minimax(boardList, "A")
+         # Pass current board and O for AI player to find the next AI move.
+        score = self.minimax(boardList, "O")
         print(score)
 
         # Join indices of boardList into string and assign to board field.
@@ -42,10 +42,11 @@ class Game(models.Model):
     # so that a move for the AI is produced at the end of the process.
 
     def minimax(self, currBoard, player):
-        if self.winner == player: # TODO need to update winner method for this to work
+        if self.winner(currBoard) == player:
             # If the current player has won the game, return 1 to indicate that
             # this scenario is favorable to the current player.
             return 1 
+            # TODO need to return -1 if other player won
 
         # Start with a move that is not possible.
         move = -1
@@ -59,7 +60,7 @@ class Game(models.Model):
             if currBoard[i] == "_":
                 # Make a copy of the board to run tests on.
                 nextMoveBoard = currBoard.copy()
-                # Set index we are testing to letter of the current player. A or U
+                # Set index we are testing to letter of the current player. O or X
                 nextMoveBoard[i] = player
                 print(nextMoveBoard, " nextMoveBoard")
                 # Make a recursive call to minimax() to find all possible 
@@ -91,10 +92,10 @@ class Game(models.Model):
 
     # This method returns the opponent of the player that is passed in
     def getOpponent(self, player):
-        if player == "A":
-            return "U"
-        elif player == "U":
-            return "A"
+        if player == "O":
+            return "X"
+        elif player == "X":
+            return "O"
 
 
     # This method overrides the standard save method to check for a winner 
@@ -111,13 +112,27 @@ class Game(models.Model):
 
 
     # This method checks if the user or AI has won the game.  The method will
-    # return 0 if there is no winner, return A if the AI has won, and return 
-    # U if the user has won.
+    # return 0 if there is no winner, return O if the AI has won, and return 
+    # X if the user has won.
     # The property tag will make this act like a field.
     @property
-    def winner(self):
-        # TODO Add logic to identify if someone has won
-        
-        # TODO set response to false if someone has won
-       
+    def winner(self, board):
+        for scenario in self.WINSCENARIOS:
+            contents = (board[scenario[0]],board[scenario[1]],board[scenario[2]])
+            if contents == ("X", "X", "X"):
+                return "X"
+            if contents == ("O", "O", "O"):
+                return "O"
         return "0"
+
+    # This is a list of all the possible winning scenarios.
+    WINSCENARIOS = [
+        [0, 1, 2],  # Top row
+        [3, 4, 5],  # Middle row
+        [6, 7, 8],  # Bottom row
+        [0, 3, 6],  # Left Column
+        [1, 4, 7],  # Middle Column
+        [2, 5, 8],  # Right Column
+        [0, 4, 8],  # Top Left to bottom right diagonal
+        [2, 4, 6],  # Top right to bottom left diagonal
+    ]
