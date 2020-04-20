@@ -23,23 +23,26 @@ class Game(models.Model):
 
         self.board = "".join(boardList) # join boardList back into string
 
+        #TODO check if this AI move has won the game
 
     # This method overrides the standard save method to check for a winner 
     # and call for an AI move if necessary.
     def save(self, *args, **kwargs):
         if self.response: # Check if a response has been requested
-            if not self.winner(): # Check if the user won with their last move
+            if self.winner == "0": # Check if the user won with their last move
                 self.AIMove() # If user did not win, get a new AI move
 
         return super(Game, self).save(*args, **kwargs)
 
 
     # This method checks if the user or AI has won the game.  The method will
-    # return True if there is a winner and false if there is not.
+    # return 0 if there is no winner, return O if the AI has won, and return 
+    # X if the user has won.
+    # The property tag will make this act like a field.
+    @property
     def winner(self):
         # TODO Add logic to identify if someone has won
-        winner = False 
-
-        # TODO set winner to true and response to false if someone has won
+        
+        # TODO set response to false if someone has won
        
-        return winner
+        return "0"
