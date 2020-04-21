@@ -1,3 +1,10 @@
+# Author: Ryan Sreenivasam
+# Description: Describes what data the admin user has access to from the admin 
+# site. 
+# Admin site is here http://127.0.0.1:8000/admin/gameapi/game/ 
+# Username: admin
+# Password: 123456
+
 from django.contrib import admin
 from .models import Game
 

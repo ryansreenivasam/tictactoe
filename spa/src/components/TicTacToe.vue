@@ -1,3 +1,7 @@
+<!-- 
+  Author: Ryan Sreenivasam
+  Description: Vue component that contains board UI and frontend logic.
+-->
 <template>
   <div>
     <h1 style="font-size: 40pt;"> Tic Tac Toe </h1>

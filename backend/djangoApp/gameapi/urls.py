@@ -1,3 +1,8 @@
+# Author: Ryan Sreenivasam
+# Description: Urls patterns that will direct users to information 
+# throughout the database.  This file is referenced by djangoApp/urls.py
+# to explain urls for the gameapi section of the app only.
+
 from django.urls import include, path
 from rest_framework import routers
 from . import views

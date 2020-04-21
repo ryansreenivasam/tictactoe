@@ -1,3 +1,7 @@
+# Author: Ryan Sreenivasam
+# Description: Models govern the contents and behavior of objects in the 
+# database.
+
 from django.db import models
 
 # This model holds information about the current game.  The board is a string 
@@ -7,7 +11,6 @@ from django.db import models
 # after a new user move has been received. The winner field contains the 
 # character of the winning player after they have won.  This will default to 
 # 0 if a winner has not been declared.
-
 class Game(models.Model):
     board = models.CharField(max_length=9, default=" " * 9)
     response = models.BooleanField(default=False)
