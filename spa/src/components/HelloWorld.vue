@@ -5,35 +5,35 @@
       <table>
         <tr>
           <td>
-            {{ gameBoard.board.substr(0,1) }}
+            <button class="boardButton" v-on:click="updateGame"> {{ gameBoard.board.substr(0,1) }} </button>
           </td>
           <td>
-            {{ gameBoard.board.substr(1,1) }}
+            <button class="boardButton" v-on:click="updateGame"> {{ gameBoard.board.substr(1,1) }} </button>
           </td>
           <td>
-            {{ gameBoard.board.substr(2,1) }}
-          </td>
-        </tr>
-        <tr>
-          <td>
-            {{ gameBoard.board.substr(3,1) }}
-          </td>
-          <td>
-            {{ gameBoard.board.substr(4,1) }}
-          </td>
-          <td>
-            {{ gameBoard.board.substr(5,1) }}
+            <button class="boardButton" v-on:click="updateGame"> {{ gameBoard.board.substr(2,1) }} </button>
           </td>
         </tr>
         <tr>
           <td>
-            {{ gameBoard.board.substr(6,1) }}
+            <button class="boardButton" v-on:click="updateGame"> {{ gameBoard.board.substr(3,1) }} </button>
           </td>
           <td>
-            {{ gameBoard.board.substr(7,1) }}
+            <button class="boardButton" v-on:click="updateGame"> {{ gameBoard.board.substr(4,1) }} </button>
           </td>
           <td>
-            {{ gameBoard.board.substr(8,1) }}
+            <button class="boardButton" v-on:click="updateGame"> {{ gameBoard.board.substr(5,1) }} </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button class="boardButton" v-on:click="updateGame"> {{ gameBoard.board.substr(6,1) }} </button>
+          </td>
+          <td>
+            <button class="boardButton" v-on:click="updateGame"> {{ gameBoard.board.substr(7,1) }} </button>
+          </td>
+          <td>
+            <button class="boardButton" v-on:click="updateGame"> {{ gameBoard.board.substr(8,1) }} </button>
           </td>
         </tr>
       </table>
@@ -112,5 +112,17 @@ ul {
 li {
   display: inline-block;
   margin: 0 10px;
+}
+table {
+  margin: 5px auto;
+}
+td {
+  width: 100px;
+  height: 100px;
+}
+.boardButton {
+  width: 100px;
+  height: 100px;
+  font-size: 30pt;
 }
 </style>
