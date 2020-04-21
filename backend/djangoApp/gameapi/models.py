@@ -23,8 +23,9 @@ class Game(models.Model):
         boardList = list(self.board) 
         print(boardList)
          # Pass current board and O for AI player to find the next AI move.
-        score = self.minimax(boardList, "O")
+        score, nextMove = self.minimax(boardList, "O")
         print(score)
+        print(nextMove)
 
         # Join indices of boardList into string and assign to board field.
         self.board = "".join(boardList)
@@ -37,26 +38,27 @@ class Game(models.Model):
     # move is determined by using the minimax algorithm to recursively look 
     # through all possible future moves and choose the move that will win.
     # currBoard is the relevant board in list form.  player is the current 
-    # player that is taking a turn.  player will either be "A" for AI or "U"
-    # for user.  When minimax() is first called by AIMove, "A" is passed in 
+    # player that is taking a turn.  player will either be "O" for AI or "X"
+    # for user.  When minimax() is first called by AIMove, "O" is passed in 
     # so that a move for the AI is produced at the end of the process.
 
     def minimax(self, currBoard, player):
+        # Start with a move that is not possible.
+        bestMove = -1
+
         # First check for a winner of the current scenario
         winPlayer = self.winner(currBoard)
         if winPlayer == player:
             # If the current player has won the game, return 1 to indicate that
             # this scenario is favorable to the current player.
             print(player, " will win")
-            return 1 
+            return 1, bestMove
         elif winPlayer == self.getOpponent(player):
             # If the opponent of the current player has won the game, return -1
             # to indicate that this scenario is favorable to the opponent.
             print(self.getOpponent(player), " will win")
-            return -1
+            return -1, bestMove
 
-        # Start with a move that is not possible.
-        move = -1
         # Start with an impossibly low score to guarantee move will be updated 
         # when we get a worst case score of -1.
         score = -2
@@ -75,26 +77,28 @@ class Game(models.Model):
                 # of the current player and pass them into the recursive call.
                 # This will cause the player to switch between AI and User at 
                 # each level of recursion. Minimax will return the best score
-                # possible from all potential outcomes of this move.
-                scoreForMove = -self.minimax(nextMoveBoard, self.getOpponent(player))
+                # possible from all potential outcomes of this move and the 
+                # calculated best move
+                scoreForMove, returnedMove = self.minimax(nextMoveBoard, self.getOpponent(player))
                 # If the score returned from the recursive call is better than 
-                # the current score, update the score. 
-                if scoreForMove > score:
+                # the current score, update the score. scoreForMove is negated 
+                # here because the score just calculated was for the opponent.
+                if (-scoreForMove) > score:
                     score = scoreForMove
                     # Record the move that led to this new high score
-                    move = i
+                    bestMove = i
 
         # If move is never updated, it will still equal -1. This means there
         # are no potential moves left in this scenario so the scenario will 
         # end in a draw.
-        if move == -1:
+        if bestMove == -1:
             # We return zero here so the score is neither increased nor 
             # decreased for this scenario.
             print("this game will be a draw")
-            return 0
+            return 0, bestMove
 
-        # Each recursive call will return score.
-        return score
+        # Each recursive call will return score and bestMove
+        return score, bestMove
 
 
     # This method returns the opponent of the player that is passed in
