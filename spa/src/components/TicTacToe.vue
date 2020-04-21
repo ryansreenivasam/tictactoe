@@ -21,7 +21,7 @@
               {{ gameBoard.board.substr(0,1) }} 
             </button>
           </td>
-          <td>
+          <td class="vert">
             <button class="boardButton" v-on:click="updateGame(1)"> 
               {{ gameBoard.board.substr(1,1) }} 
             </button>
@@ -33,17 +33,17 @@
           </td>
         </tr>
         <tr>
-          <td>
+          <td class="horiz">
             <button class="boardButton" v-on:click="updateGame(3)"> 
               {{ gameBoard.board.substr(3,1) }} 
             </button>
           </td>
-          <td>
+          <td class="vert horiz">
             <button class="boardButton" v-on:click="updateGame(4)"> 
               {{ gameBoard.board.substr(4,1) }} 
             </button>
           </td>
-          <td>
+          <td class="horiz">
             <button class="boardButton" v-on:click="updateGame(5)"> 
               {{ gameBoard.board.substr(5,1) }} 
             </button>
@@ -55,7 +55,7 @@
               {{ gameBoard.board.substr(6,1) }} 
             </button>
           </td>
-          <td>
+          <td class="vert">
             <button class="boardButton" v-on:click="updateGame(7)"> 
               {{ gameBoard.board.substr(7,1) }} 
             </button>
@@ -228,5 +228,14 @@ td {
   width: 100px;
   height: 100px;
   font-size: 4rem;
+  border: none;
+}
+.vert {
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+}
+.horiz {
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
 }
 </style>
