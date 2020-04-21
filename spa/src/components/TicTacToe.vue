@@ -71,7 +71,6 @@
     <br>
   </div>
 </template>
-
 <script>
 // Axios is a tool to handle HTTP requests
 import axios from "axios"; 
@@ -108,7 +107,7 @@ export default {
     * is completed.  The POST request contains an empty board.
     */
     newGame: function () {
-      var board = {
+      let board = {
         'board': '_________',
         'response': false, 
         'winner': "0" 
@@ -137,13 +136,13 @@ export default {
     updateGame: function (index) {
       this.moveNum++;
       // Strings in Javascript are immutable so a copy must be made
-      var currBoard = this.gameBoard.board;
+      let currBoard = this.gameBoard.board;
       // Add X to the string in the index that the user requested
       currBoard = currBoard.substring(0, index) + "X" + currBoard.substring(index+1);
       //Update the game board here so the UI is updated immediately
       this.gameBoard.board = currBoard;
       // Create a board object with the new string and response set to true
-      var board = { 'board': currBoard, 'response': true};
+      let board = { 'board': currBoard, 'response': true};
       // Send a PUT request with the new player move and request for an AI move
       axios.put(`${djangoURL}api/${this.gameBoard.id}/`, board) 
         .then( response => {
@@ -225,14 +224,9 @@ td {
   width: 100px;
   height: 100px;
 }
-button {
-  width: 150px;
-  height: 50px;
-  font-size: 15pt;
-}
 .boardButton {
   width: 100px;
   height: 100px;
-  font-size: 30pt;
+  font-size: 4rem;
 }
 </style>
