@@ -75,8 +75,10 @@
 </template>
 
 <script>
-//Axios is a tool to handle HTTP requests
+// Axios is a tool to handle HTTP requests
 import axios from "axios"; 
+// Config file to ensure uniformity of URL during API requests
+import { djangoURL } from "../config.js";
 
 export default {
   name: 'TicTacToe',
@@ -101,9 +103,9 @@ export default {
       this.newGame();
   },
   methods: {
-    /* 
-    This method is called by the system to start a new game after a game 
-    is completed.  The POST request contains an empty board.
+    /**
+    * This method is called by the system to start a new game after a game 
+    * is completed.  The POST request contains an empty board.
     */
     newGame: function () {
       var board = {
@@ -112,7 +114,7 @@ export default {
         'winner': "0" 
       };
       // Add a new game to database with an empty board
-      axios.post("http://127.0.0.1:8000/api/", board) 
+      axios.post(`${djangoURL}api/`, board) 
         .then( response => {
           // POST response contains the new game object
           this.gameBoard = response.data
@@ -124,13 +126,13 @@ export default {
         });
     },
 
-    /* 
-    This method will update the board with a user's new move.  The index in
-    the board string that corresponds to the placement of the user's move is 
-    updated with an X.  The game object's response field is set to true 
-    signaling that a new AI move has been requested. A PUT request is then sent to
-    the server with the updated information. The PUT request response will contain 
-    the new AI move.
+    /**
+    * This method will update the board with a user's new move.  The index in
+    * the board string that corresponds to the placement of the user's move is 
+    * updated with an X.  The game object's response field is set to true 
+    * signaling that a new AI move has been requested. A PUT request is then sent 
+    * to the server with the updated information. The PUT request response will 
+    * contain the new AI move.
     */
     updateGame: function (index) {
       // Strings in Javascript are immutable so a copy must be made
@@ -142,7 +144,7 @@ export default {
       // Create a board object with the new string and response set to true
       var board = { 'board': currBoard, 'response': true};
       // Send a PUT request with the new player move and request for an AI move
-      axios.put(`http://127.0.0.1:8000/api/${this.gameBoard.id}/`, board) 
+      axios.put(`${djangoURL}api/${this.gameBoard.id}/`, board) 
         .then( response => {
           this.gameBoard = response.data  // PUT response contains new AI move
           // Check for a winner here after the response has been received
@@ -153,10 +155,10 @@ export default {
         });
     },
 
-    /*
-    This method will check the winner field of the game object and add a 
-    prompt on the screen if a player has won. The prompt will disappear 
-    after 5 seconds and the game will be reset.
+    /**
+    * This method will check the winner field of the game object and add a 
+    * prompt on the screen if a player has won. The prompt will disappear 
+    * after 5 seconds and the game will be reset.
     */
     checkForWinner: function () {
       // Check if the user has won
@@ -176,9 +178,9 @@ export default {
       }
     },
 
-    /*
-    This method will make the winner dialog visible for 5 seconds then make 
-    it invisible again.  After 5 seconds, a new game will begin.
+    /**
+    * This method will make the winner dialog visible for 5 seconds then make 
+    * it invisible again.  After 5 seconds, a new game will begin.
     */
     flashDialog: function () {
       // Set dialog to be visible
