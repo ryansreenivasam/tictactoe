@@ -1,6 +1,8 @@
 <template>
   <div class="hello">
     <h1> Tic Tac Toe </h1>
+    <h3> By: Ryan Sreenivasam </h3>
+    <h1>{{ dialog }}</h1>
     <!--
       This table element is the tic tac toe board.  Each place on the board is 
       a button and when the button is pressed the updateGame method is called 
@@ -78,11 +80,16 @@ import axios from "axios";
 export default {
   name: 'HelloWorld',
   props: {
+    dialog: String
   },
   data() {
     return {
       // Contents of game throughout play
-      gameBoard: {'board': '_________'}
+      gameBoard: {
+        'board': '_________',
+        'response': false, 
+        'winner': "0" 
+      },
     }
   },
   methods: {
@@ -113,16 +120,31 @@ export default {
       var currBoard = this.gameBoard.board;
       // Add X to the string in the index that the user requested
       currBoard = currBoard.substring(0, index) + "X" + currBoard.substring(index+1);
+      //Update the game board here so the UI is updated immediately
+      this.gameBoard.board = currBoard;
       // Create a board object with the new string and response set to true
       var board = { 'board': currBoard, 'response': true};
       // Send a PUT request with the new player move and request for an AI move
       axios.put(`http://127.0.0.1:8000/api/${this.gameBoard.id}/`, board) 
         .then( response => {
           this.gameBoard = response.data  // PUT response contains new AI move
+          this.checkForWinner();
         })
         .catch(e => {
           this.errors.push(e)
         });
+    },
+
+    checkForWinner: function () {
+      if(this.gameBoard.winner == "X") {
+        this.dialog = "Holy Cow! Somehow You Won!"
+      }
+      else if(this.gameBoard.winner == "O") {
+        this.dialog = "The Computer Won Again!"
+      }
+      else {
+        this.dialog = "It's a draw"
+      }
     }
   }
 }
