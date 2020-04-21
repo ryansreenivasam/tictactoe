@@ -42,11 +42,18 @@ class Game(models.Model):
     # so that a move for the AI is produced at the end of the process.
 
     def minimax(self, currBoard, player):
-        if self.winner(currBoard) == player:
+        # First check for a winner of the current scenario
+        winPlayer = self.winner(currBoard)
+        if winPlayer == player:
             # If the current player has won the game, return 1 to indicate that
             # this scenario is favorable to the current player.
+            print(player, " will win")
             return 1 
-            # TODO need to return -1 if other player won
+        elif winPlayer == self.getOpponent(player):
+            # If the opponent of the current player has won the game, return -1
+            # to indicate that this scenario is favorable to the opponent.
+            print(self.getOpponent(player), " will win")
+            return -1
 
         # Start with a move that is not possible.
         move = -1
@@ -104,7 +111,7 @@ class Game(models.Model):
         # Check if a response has been requested by a new user move.
         if self.response: 
             # Check if the user won with their latest move.
-            if self.winner == "0":
+            if self.winner(self.board) == "0":
                 # If user did not win, generate a new AI move.
                 self.AIMove()
 
@@ -114,8 +121,6 @@ class Game(models.Model):
     # This method checks if the user or AI has won the game.  The method will
     # return 0 if there is no winner, return O if the AI has won, and return 
     # X if the user has won.
-    # The property tag will make this act like a field.
-    @property
     def winner(self, board):
         for scenario in self.WINSCENARIOS:
             contents = (board[scenario[0]],board[scenario[1]],board[scenario[2]])
