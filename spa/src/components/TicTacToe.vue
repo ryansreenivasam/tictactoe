@@ -2,7 +2,7 @@
   <div>
     <h1 style="font-size: 40pt;"> Tic Tac Toe </h1>
     <h3> By: Ryan Sreenivasam </h3>
-    <h1>{{ dialog }}</h1>
+    <h1 v-show="dialogVisible">{{ dialog }}</h1>
     <br>
     <!--
       This table element is the tic tac toe board.  Each place on the board is 
@@ -86,7 +86,10 @@ export default {
         'response': false, 
         'winner': "0" 
       },
-      dialog: ""
+      // The dialog that is displayed when a player wins
+      dialog: "",
+      // Boolean that governs if dialog is visible or not
+      dialogVisible: false
     }
   },
   // Immediately create a new game when the page loads.
@@ -148,22 +151,42 @@ export default {
 
     /*
     This method will check the winner field of the game object and add a 
-    prompt on the screen if a player has won.
+    prompt on the screen if a player has won. The prompt will disappear 
+    after 5 seconds and the game will be reset.
     */
     checkForWinner: function () {
+      // Check if the user has won
       if(this.gameBoard.winner == "X") {
+        // Set dialog to something descriptive
         this.dialog = "Holy Cow! Somehow You Won!";
+        this.flashDialog();
       }
+      // Check if the computer has won
       else if(this.gameBoard.winner == "O") {
+        // Set dialog to be something descriptive
         this.dialog = "The Computer Wins Again!";
+        this.flashDialog();
       }
       else {
         this.dialog = ""
       }
+    },
+
+    /*
+    This method will make the winner dialog visible for 5 seconds then make 
+    it invisible again.  After 5 seconds, a new game will begin.
+    */
+    flashDialog: function () {
+      // Set dialog to be visible
+      this.dialogVisible = true;
+      // Dialog will disappear and a new game will be created after 5 seconds
+      setTimeout(() => {
+        this.dialogVisible = false;
+        this.newGame();
+      }, 5000);
     }
   }
 }
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
