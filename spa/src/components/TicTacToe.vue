@@ -70,7 +70,7 @@
     </div>
     <br>
     <!-- This is a button that sends a POST request with an empty game board -->
-    <button v-on:click="newGame"> NewGame </button>
+    <!-- <button v-on:click="newGame"> NewGame </button> -->
   </div>
 </template>
 
@@ -95,7 +95,9 @@ export default {
       // The dialog that is displayed when a player wins
       dialog: "",
       // Boolean that governs if dialog is visible or not
-      dialogVisible: false
+      dialogVisible: false,
+      // Keep track of the number of moves the user has made
+      moveNum: 1
     }
   },
   // Immediately create a new game when the page loads.
@@ -135,6 +137,7 @@ export default {
     * contain the new AI move.
     */
     updateGame: function (index) {
+      this.moveNum++;
       // Strings in Javascript are immutable so a copy must be made
       var currBoard = this.gameBoard.board;
       // Add X to the string in the index that the user requested
@@ -173,8 +176,12 @@ export default {
         this.dialog = "The Computer Wins Again!";
         this.flashDialog();
       }
-      else {
-        this.dialog = ""
+      // If the user does more than 5 moves, the game is a draw
+      else if (this.moveNum > 5) {
+        this.moveNum = 1;
+        // Set dialog to be something descriptive
+        this.dialog = "It's a Draw!";
+        this.flashDialog();
       }
     },
 
