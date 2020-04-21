@@ -9,6 +9,7 @@ from django.db import models
 class Game(models.Model):
     board = models.CharField(max_length=9, default=" " * 9)
     response = models.BooleanField(default=False)
+    winner = models.CharField(max_length=1, default="0")
 
     # This specifies what to print when this model is printed
     def __str__(self):
@@ -21,23 +22,22 @@ class Game(models.Model):
     def AIMove(self):
         # Split board string into list for further manipulation.
         boardList = list(self.board) 
-        print(boardList)
+        
          # Pass current board and O for AI player to find the next AI move.
         score, nextMove = self.minimax(boardList, "O")
-        print(score)
-        print(nextMove)
-        
+
         # Set the index of the AI's next move to O
         boardList[nextMove] = "O"
 
+        # Check to see if the last AI move won the game
+        if self.checkWinner(boardList) == "O":
+            self.winner = "O"
+
         # Join indices of boardList into string and assign to board field.
         self.board = "".join(boardList)
-        print(self.board)
 
         # We have generated a new move so a response is no longer needed
         self.response = False 
-
-        #TODO check if this AI move has won the game
 
 
     # This method will determine the next move that the AI will make.  The
@@ -53,16 +53,14 @@ class Game(models.Model):
         bestMove = -1
 
         # First check for a winner of the current scenario
-        winPlayer = self.winner(currBoard)
+        winPlayer = self.checkWinner(currBoard)
         if winPlayer == player:
             # If the current player has won the game, return 1 to indicate that
             # this scenario is favorable to the current player.
-            print(player, " will win")
             return 1, bestMove
         elif winPlayer == self.getOpponent(player):
             # If the opponent of the current player has won the game, return -1
             # to indicate that this scenario is favorable to the opponent.
-            print(self.getOpponent(player), " will win")
             return -1, bestMove
 
         # Start with an impossibly low score to guarantee move will be updated 
@@ -77,7 +75,6 @@ class Game(models.Model):
                 nextMoveBoard = currBoard.copy()
                 # Set index we are testing to letter of the current player. O or X
                 nextMoveBoard[i] = player
-                print(nextMoveBoard, " nextMoveBoard")
                 # Make a recursive call to minimax() to find all possible 
                 # outcomes of the move we are testing.  Find the opponent 
                 # of the current player and pass them into the recursive call.
@@ -90,7 +87,8 @@ class Game(models.Model):
                 # the current score, update the score. scoreForMove is negated 
                 # here because the score just calculated was for the opponent.
                 if (-scoreForMove) > score:
-                    score = scoreForMove
+                    # scoreForMove is negated here for the same reason as above
+                    score = -scoreForMove
                     # Record the move that led to this new high score
                     bestMove = i
 
@@ -100,7 +98,6 @@ class Game(models.Model):
         if bestMove == -1:
             # We return zero here so the score is neither increased nor 
             # decreased for this scenario.
-            print("this game will be a draw")
             return 0, bestMove
 
         # Each recursive call will return score and bestMove
@@ -120,8 +117,12 @@ class Game(models.Model):
     def save(self, *args, **kwargs):
         # Check if a response has been requested by a new user move.
         if self.response: 
+            winner = self.checkWinner(list(self.board))
             # Check if the user won with their latest move.
-            if self.winner(self.board) == "0":
+            if winner == "X":
+                # If the user did win, set winner to X
+                self.winner = "X"
+            else:
                 # If user did not win, generate a new AI move.
                 self.AIMove()
 
@@ -131,7 +132,7 @@ class Game(models.Model):
     # This method checks if the user or AI has won the game.  The method will
     # return 0 if there is no winner, return O if the AI has won, and return 
     # X if the user has won.
-    def winner(self, board):
+    def checkWinner(self, board):
         for scenario in self.WINSCENARIOS:
             contents = (board[scenario[0]],board[scenario[1]],board[scenario[2]])
             if contents == ("X", "X", "X"):
