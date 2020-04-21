@@ -69,8 +69,6 @@
       </table>
     </div>
     <br>
-    <!-- This is a button that sends a POST request with an empty game board -->
-    <!-- <button v-on:click="newGame"> NewGame </button> -->
   </div>
 </template>
 
