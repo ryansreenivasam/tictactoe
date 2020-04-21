@@ -1,10 +1,32 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>  
+    <div class="board">
+      <div class="row">
+        <h3>
+          {{ gameBoard.board.substr(0,1) }} 
+          {{ gameBoard.board.substr(1,1) }}
+          {{ gameBoard.board.substr(2,1) }}
+        </h3>
+      </div>
+      <div class="row">
+        <h3>
+          {{ gameBoard.board.substr(3,1) }} 
+          {{ gameBoard.board.substr(4,1) }}
+          {{ gameBoard.board.substr(5,1) }}
+        </h3>      
+      </div>
+      <div class="row">
+        <h3>
+          {{ gameBoard.board.substr(6,1) }} 
+          {{ gameBoard.board.substr(7,1) }}
+          {{ gameBoard.board.substr(8,1) }}
+        </h3>      
+      </div>
+    </div>
 
     <!-- This displays the current contents of the board as it is updated -->
     <h3>currentgame: {{ gameBoard }}</h3>
-    
+
     <!-- This is a button that sends a PUT request with current game board -->
     <button v-on:click="updateGame"> UpdateGame </button>
     
