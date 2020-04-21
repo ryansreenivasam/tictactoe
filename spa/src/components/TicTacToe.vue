@@ -1,8 +1,9 @@
 <template>
-  <div class="hello">
-    <h1> Tic Tac Toe </h1>
+  <div>
+    <h1 style="font-size: 40pt;"> Tic Tac Toe </h1>
     <h3> By: Ryan Sreenivasam </h3>
     <h1>{{ dialog }}</h1>
+    <br>
     <!--
       This table element is the tic tac toe board.  Each place on the board is 
       a button and when the button is pressed the updateGame method is called 
@@ -74,7 +75,7 @@
 import axios from "axios"; 
 
 export default {
-  name: 'HelloWorld',
+  name: 'TicTacToe',
   props: {
   },
   data() {
