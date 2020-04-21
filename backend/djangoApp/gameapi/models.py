@@ -26,10 +26,16 @@ class Game(models.Model):
         score, nextMove = self.minimax(boardList, "O")
         print(score)
         print(nextMove)
+        
+        # Set the index of the AI's next move to O
+        boardList[nextMove] = "O"
 
         # Join indices of boardList into string and assign to board field.
         self.board = "".join(boardList)
         print(self.board)
+
+        # We have generated a new move so a response is no longer needed
+        self.response = False 
 
         #TODO check if this AI move has won the game
 
@@ -38,8 +44,8 @@ class Game(models.Model):
     # move is determined by using the minimax algorithm to recursively look 
     # through all possible future moves and choose the move that will win.
     # currBoard is the relevant board in list form.  player is the current 
-    # player that is taking a turn.  player will either be "O" for AI or "X"
-    # for user.  When minimax() is first called by AIMove, "O" is passed in 
+    # player that is taking a turn.  player will either be O for AI or X
+    # for user.  When minimax() is first called by AIMove, O is passed in 
     # so that a move for the AI is produced at the end of the process.
 
     def minimax(self, currBoard, player):
