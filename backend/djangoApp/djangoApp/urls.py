@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls), # url for the admin site
-    path('', include('gameapi.urls')), # url for the api, kept in gameapi/urls.py
+    # url for the admin site
+    path('admin/', admin.site.urls),
+    # url for the api, kept in gameapi/urls.py
+    path('', include('gameapi.urls')), 
 ]

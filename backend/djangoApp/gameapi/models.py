@@ -2,9 +2,11 @@ from django.db import models
 
 # This model holds information about the current game.  The board is a string 
 # with a length of 9, allowing 1 letter for each of the 9 spaces on the board.
-# The board begins as a string with 9 blank spaces.  The response field determines
-# if an AI move has been requested. Response will be set to True after a new user 
-# move has been received.
+# The board begins as a string with 9 blank spaces.  The response field 
+# determines if an AI move has been requested. Response will be set to True 
+# after a new user move has been received. The winner field contains the 
+# character of the winning player after they have won.  This will default to 
+# 0 if a winner has not been declared.
 
 class Game(models.Model):
     board = models.CharField(max_length=9, default=" " * 9)
