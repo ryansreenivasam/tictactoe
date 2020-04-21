@@ -80,7 +80,6 @@ import axios from "axios";
 export default {
   name: 'HelloWorld',
   props: {
-    dialog: String
   },
   data() {
     return {
@@ -90,10 +89,16 @@ export default {
         'response': false, 
         'winner': "0" 
       },
+      dialog: ""
     }
   },
+  // Immediately create a new game when the page loads.
+  mounted: function () {
+      this.newGame();
+  },
   methods: {
-    /* This method is called by the system to start a new game after a game 
+    /* 
+    This method is called by the system to start a new game after a game 
     is completed.  The POST request contains an empty board.
     */
     newGame: function () {
@@ -108,7 +113,8 @@ export default {
         });
     },
 
-    /* This method will update the board with a user's new move.  The index in
+    /* 
+    This method will update the board with a user's new move.  The index in
     the board string that corresponds to the placement of the user's move is 
     updated with an X.  The game object's response field is set to true 
     signaling that a new AI move has been requested. A PUT request is then sent to
@@ -128,6 +134,7 @@ export default {
       axios.put(`http://127.0.0.1:8000/api/${this.gameBoard.id}/`, board) 
         .then( response => {
           this.gameBoard = response.data  // PUT response contains new AI move
+          // Check for a winner here after the response has been received
           this.checkForWinner();
         })
         .catch(e => {
@@ -135,12 +142,16 @@ export default {
         });
     },
 
+    /*
+    This method will check the winner field of the game object and add a 
+    prompt on the screen if a player has won.
+    */
     checkForWinner: function () {
       if(this.gameBoard.winner == "X") {
-        this.dialog = "Holy Cow! Somehow You Won!"
+        this.dialog = "Holy Cow! Somehow You Won!";
       }
       else if(this.gameBoard.winner == "O") {
-        this.dialog = "The Computer Won Again!"
+        this.dialog = "The Computer Wins Again!";
       }
       else {
         this.dialog = "It's a draw"
