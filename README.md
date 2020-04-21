@@ -82,6 +82,6 @@ frontend in the PUT request response.
 
 # Known Errors
 
-- Users can choose squares already occupied by the AI's characters as their next move.  This will allow the player to rewrite history and win.
-- There is currently nothing to handle games that end in a draw.  User's must reload the page to start a new game.
+- Users can choose squares already occupied by the AI's characters as their next move.  This will allow the player to rewrite history and win.  
+- If the user exploits the first error to change the winner, another new game will be requested and the game will reset twice after each successive 5 second timer is up.
 - My own testing has shown the AI to be very capable.  Please contact me if you are able to beat it. I would love to see how you did it.
