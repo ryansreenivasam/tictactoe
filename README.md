@@ -40,6 +40,20 @@ game logic and calculates moves for the unbeatable AI opponent.
 This app requires Python 3.7.7 to run.  It is recommended to use a python 
 virtual environment for dependencies. Pip is used to install dependencies.
 
+### Set up new Python Virtual Environment
+Install virtualenv
+```
+sudo pip3 install virtualenv
+```
+From inside web-challenge/backend/ create a new virtual environment
+```
+virtualenv newenv
+```
+Activate the virtual environment
+```
+source newenv/bin/activate
+```
+
 ### Install Django dependencies
 ```
 # From web-challenge/backend/
