@@ -164,18 +164,23 @@ export default {
     checkForWinner: function () {
       // Check if the user has won
       if(this.gameBoard.winner == "X") {
+        // Reset the move counter
+        this.moveNum = 1;
         // Set dialog to something descriptive
         this.dialog = "Holy Cow! Somehow You Won!";
         this.flashDialog();
       }
       // Check if the computer has won
       else if(this.gameBoard.winner == "O") {
+        // Reset the move counter
+        this.moveNum = 1;
         // Set dialog to be something descriptive
         this.dialog = "The Computer Wins Again!";
         this.flashDialog();
       }
       // If the user does more than 5 moves, the game is a draw
       else if (this.moveNum > 5) {
+        // Reset the move counter
         this.moveNum = 1;
         // Set dialog to be something descriptive
         this.dialog = "It's a Draw!";
