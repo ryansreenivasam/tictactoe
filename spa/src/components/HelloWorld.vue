@@ -1,27 +1,42 @@
 <template>
   <div class="hello">
+    <h1> Tic Tac Toe </h1>
     <div class="board">
-      <div class="row">
-        <h3>
-          {{ gameBoard.board.substr(0,1) }} 
-          {{ gameBoard.board.substr(1,1) }}
-          {{ gameBoard.board.substr(2,1) }}
-        </h3>
-      </div>
-      <div class="row">
-        <h3>
-          {{ gameBoard.board.substr(3,1) }} 
-          {{ gameBoard.board.substr(4,1) }}
-          {{ gameBoard.board.substr(5,1) }}
-        </h3>      
-      </div>
-      <div class="row">
-        <h3>
-          {{ gameBoard.board.substr(6,1) }} 
-          {{ gameBoard.board.substr(7,1) }}
-          {{ gameBoard.board.substr(8,1) }}
-        </h3>      
-      </div>
+      <table>
+        <tr>
+          <td>
+            {{ gameBoard.board.substr(0,1) }}
+          </td>
+          <td>
+            {{ gameBoard.board.substr(1,1) }}
+          </td>
+          <td>
+            {{ gameBoard.board.substr(2,1) }}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {{ gameBoard.board.substr(3,1) }}
+          </td>
+          <td>
+            {{ gameBoard.board.substr(4,1) }}
+          </td>
+          <td>
+            {{ gameBoard.board.substr(5,1) }}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {{ gameBoard.board.substr(6,1) }}
+          </td>
+          <td>
+            {{ gameBoard.board.substr(7,1) }}
+          </td>
+          <td>
+            {{ gameBoard.board.substr(8,1) }}
+          </td>
+        </tr>
+      </table>
     </div>
 
     <!-- This displays the current contents of the board as it is updated -->
@@ -97,8 +112,5 @@ ul {
 li {
   display: inline-block;
   margin: 0 10px;
-}
-a {
-  color: #42b983;
 }
 </style>
