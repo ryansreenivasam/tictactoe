@@ -63,13 +63,9 @@
         </tr>
       </table>
     </div>
-
-    <!-- This displays the current contents of the board as it is updated -->
-    <h3>currentgame: {{ gameBoard }}</h3>
-
+    <br>
     <!-- This is a button that sends a POST request with an empty game board -->
     <button v-on:click="newGame"> NewGame </button>
-  
   </div>
 </template>
 
@@ -102,11 +98,18 @@ export default {
     is completed.  The POST request contains an empty board.
     */
     newGame: function () {
-      var board = {'board': '_________'};
-      // This adds a new game with an empty board
+      var board = {
+        'board': '_________',
+        'response': false, 
+        'winner': "0" 
+      };
+      // Add a new game to database with an empty board
       axios.post("http://127.0.0.1:8000/api/", board) 
         .then( response => {
-          this.gameBoard = response.data  // POST response contains the new game object
+          // POST response contains the new game object
+          this.gameBoard = response.data
+          // Check for winner here to reset the dialog from any previous game
+          this.checkForWinner();
         })
         .catch(e => {
           this.errors.push(e)
@@ -154,7 +157,7 @@ export default {
         this.dialog = "The Computer Wins Again!";
       }
       else {
-        this.dialog = "It's a draw"
+        this.dialog = ""
       }
     }
   }
@@ -181,6 +184,11 @@ table {
 td {
   width: 100px;
   height: 100px;
+}
+button {
+  width: 150px;
+  height: 50px;
+  font-size: 15pt;
 }
 .boardButton {
   width: 100px;
