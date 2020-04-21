@@ -12,16 +12,17 @@ The Vue.js frontend displays the contents of the game board, accepts user
 input, and makes API requests when the player makes a new move or the game 
 resets. The Vue app runs on a node.js server.
 
-npm will be used to install dependencies.
+npm will be used to install dependencies.  
 
 ### Install dependencies
 ```
-$ cd spa
+# From web-challenge/spa
 $ npm install
 ```
 
 ### Start development server
 ```
+# From web-challenge/spa
 $ npm run serve
 ```
 
@@ -41,12 +42,13 @@ virtual environment for dependencies. Pip is used to install dependencies.
 
 ### Install Django dependencies
 ```
-$ cd backend
+# From web-challenge/backend/
 $ pip install -r requirements.txt
 ```
 
 ### Start development server
 ```
+# From web-challenge/backend/djangoApp/
 $ python manage.py runserver
 ```
 If the development server is not running at http://127.0.0.1:8000/, go to spa/src/config.js 
