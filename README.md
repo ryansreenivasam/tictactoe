@@ -1,8 +1,9 @@
 # Tic Tac Toe
 
-This game of tic tac toe is composed of a Vue.js frontend and a Django backend 
+This game of Tic Tac Toe is composed of a Vue.js frontend and a Django backend 
 that are completely separated.  The frontend and backend communicate via API 
-only. Both the Node server and the Django server must be running for the app to 
+only. The player makes the first move and the AI opponent will never lose.
+Both the Node server and the Django server must be running for the app to 
 work properly.
 
 # Javascript Single Page Application
@@ -15,13 +16,13 @@ npm will be used to install dependencies.
 
 ### Install dependencies
 ```
-cd spa
-npm install
+$ cd spa
+$ npm install
 ```
 
 ### Start development server
 ```
-npm run serve
+$ npm run serve
 ```
 
 ### Access Single Page Application
@@ -40,14 +41,16 @@ virtual environment for dependencies. Pip is used to install dependencies.
 
 ### Install Django dependencies
 ```
-cd backend
-pip install -r requirements.txt
+$ cd backend
+$ pip install -r requirements.txt
 ```
 
 ### Start development server
 ```
-python manage.py runserver
+$ python manage.py runserver
 ```
+If the development server is not running at http://127.0.0.1:8000/, go to spa/src/config.js 
+and change the "djangoURL" variable to the URL that your django server is running at.
 
 ### Opponent AI
 
